@@ -1,0 +1,28 @@
+{
+  "name": "log1x/wp-offload-media-avatars",
+  "type": "wordpress-muplugin",
+  "license": "MIT",
+  "description": "A simple WP Media Offload integration for local avatar plugins.",
+  "keywords": [
+    "wordpress",
+    "bedrock"
+  ],
+  "require": {
+    "php": ">=7.2"
+  },
+  "require-dev": {
+    "squizlabs/php_codesniffer": "^3.5"
+  },
+  "scripts": {
+    "lint": [
+      "phpcs --ignore=vendor --extensions=php --standard=PSR12 ."
+    ]
+  },
+  "config": {
+    "optimize-autoloader": true,
+    "preferred-install": "dist",
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}
