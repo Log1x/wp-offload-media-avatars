@@ -4,7 +4,7 @@
  * Plugin Name: WP Offload Media Avatars
  * Plugin URI:  https://github.com/log1x/wp-offload-media-avatars
  * Description: WP Offload Media integration for local avatar plugins.
- * Version:     1.0.1
+ * Version:     1.0.2
  * Author:      Brandon Nifong
  * Author URI:  https://github.com/log1x
  * Licence:     MIT
@@ -65,7 +65,10 @@ add_filter('plugins_loaded', new class {
                                         $this->as3cf->get_setting('region')
                                     ) . '://',
                                 ])) {
-                                    return $avatar;
+                                    return apply_filters(
+                                        'as3cf_filter_post_local_to_provider',
+                                        $avatar
+                                    );
                                 }
 
                                 return $this->parse($avatar);
@@ -82,13 +85,12 @@ add_filter('plugins_loaded', new class {
                      */
                     protected function parse($string = null)
                     {
-                        if (empty($string)) {
+                        if (empty($original = $string)) {
                             return;
                         }
 
-                        $original = $string;
-
                         if (
+                            // phpcs:ignore
                             ! empty($tag = (new DOMXPath(@DOMDocument::loadHTML($string)))) &&
                             ! empty($tag = $tag->evaluate('string(//img/@src)'))
                         ) {
